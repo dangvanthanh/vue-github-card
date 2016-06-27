@@ -8,6 +8,18 @@ var GithubCard = { template: "<div class=github-card><div class=github-card__sea
     };
   },
 
+  props: {
+    user: {
+      type: String
+    }
+  },
+  ready: function ready() {
+    if (this.user) {
+      this.username = this.user;
+      this.onSubmit();
+    }
+  },
+
   methods: {
     onSubmit: function onSubmit() {
       var self = this;

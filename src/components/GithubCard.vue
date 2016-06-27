@@ -52,6 +52,17 @@ export default {
       msg: ''
     }
   },
+  props: {
+    user: {
+      type: String
+    }
+  },
+  ready () {
+    if (this.user) {
+      this.username = this.user
+      this.onSubmit()
+    }
+  },
   methods: {
     onSubmit () {
       let self = this;
