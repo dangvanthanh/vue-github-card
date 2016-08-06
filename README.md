@@ -2,7 +2,7 @@
 
 > Github card component using Vue.js
 
-![Github card component using Vue.js](screenshot.png)
+![](screenshot.png)
 
 ## Usage
 
