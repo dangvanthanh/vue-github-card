@@ -26,7 +26,7 @@ export default {
 
 ### .html files
 
-``html
+```html
 <!DOCTYPE html>
 <html>
 <head>
