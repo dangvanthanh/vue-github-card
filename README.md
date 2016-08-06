@@ -8,7 +8,7 @@
 
 ### .vue files
 
-```
+```html
 <template>
 	<github-card user="dangvanthanh"></github-card>
 </template>
@@ -26,7 +26,7 @@ export default {
 
 ### .html files
 
-```
+``html
 <!DOCTYPE html>
 <html>
 <head>
