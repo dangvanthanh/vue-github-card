@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import GithubCardService from './githubcard-service'
+
 export default {
   data () {
     return {
@@ -77,67 +79,198 @@ export default {
   },
   methods: {
     onSubmit () {
-      let self = this;
-      const urlGithubApi = 'https://api.github.com'
-      let urlGithubProfile =  `${urlGithubApi}/users/${self.username}`
-      let urlGithubRepos = `${urlGithubApi}/users/${self.username}/repos`
+      let self = this
 
       if (self.username.trim() === '') {
         return
       }
 
-      fetch(urlGithubProfile)
-        .then((res) => res.json())
-        .then((data) => {
-          self.username = ''
+			self.username = self.username.trim()
 
-          if (data.message === 'Not Found') {
-            self.profile = {}
-            self.isFoundProfile = false
-            self.msg = `
-              <h3>Oops !!!</h3>
-              <p>The component couldn't find github username the you were looking for. Try again.</p>
-            `
-            return
-          }
+      GithubCardService.fetchUsername(self.username).then(self.getProfileByUsername)
+      GithubCardService.fetchReposByUsername(self.username).then(self.getReposByUsername)
+    },
+    getProfileByUsername (data) {
+      let self = this
+      self.username = ''
 
-          self.msg = ''
-          self.isFoundProfile = true
-          self.profile = {
-            name: data.name,
-            avatar: data.avatar_url,
-            location: data.location,
-            url: data.html_url,
-            repos: data.public_repos,
-            reposUrl: data.html_url + '?tab=repositories',
-            followers: data.followers,
-            followersUrl: data.html_url + '/followers',
-            following: data.following,
-            followingUrl: data.html_url + '/following'
-          }
+       if (data.message === 'Not Found') {
+         self.profile = {}
+         self.isFoundProfile = false
+         self.msg = `
+           <h3>Oops !!!</h3>
+           <p>The component couldn't find github username the you were looking for. Try again.</p>
+         `
+         return
+       }
 
-          fetch(urlGithubRepos)
-            .then((res) => res.json())
-            .then((data) => {
-              data = data.filter((d) => {
-                return d.stargazers_count > 0
-              }).sort((a, b) => {
-                return a.stargazers_count < b.stargazers_count ? 1 : -1
-              }).map((d) => {
-                return {
-                  name: d.name,
-                  stars: d.stargazers_count,
-                  language: d.language,
-                  repoUrl: d.html_url
-                }
-              })
+       self.msg = ''
+       self.isFoundProfile = true
+       self.profile = {
+         name: data.name,
+         avatar: data.avatar_url,
+         location: data.location,
+         url: data.html_url,
+         repos: data.public_repos,
+         reposUrl: data.html_url + '?tab=repositories',
+         followers: data.followers,
+         followersUrl: data.html_url + '/followers',
+         following: data.following,
+         followingUrl: data.html_url + '/following'
+       }
+    },
+    getReposByUsername (data) {
+      let self = this
+   		let responseData = data.filter((d) => {
+   			return d.stargazers_count > 0
+   		}).sort((a, b) => {
+   			return a.stargazers_count < b.stargazers_count ? 1 : -1
+   		}).map((d) => {
+   			return {
+   				name: d.name,
+   				stars: d.stargazers_count,
+   				language: d.language,
+   				repoUrl: d.html_url
+   			}
+   		})
 
-              if (data.length) {
-                self.repos = data
-              }
-            })
-        })
+   		if (responseData.length) {
+   			self.repos = responseData
+   		}
     }
   }
 }
 </script>
+
+<style>
+.github-card {
+  max-width: 25rem;
+}
+
+.github-card a {
+  color: #444;
+  transition: color .5s ease;
+}
+
+.github-card a:hover,
+.github-card a:focus {
+  color: #666;
+}
+
+.github-card-search {
+  margin-bottom: 1rem;
+}
+
+.github-card-textfield {
+  border: 1px solid rgba(34, 36, 38, .15);
+  color: #444;
+  font-size: 1rem;
+  padding: .5rem;
+  width: 100%;
+}
+
+.github-card-textfield:hover,
+.github-card-textfield:focus {
+  outline: none;
+}
+
+.github-card-error {
+  padding: .5rem 1rem;
+}
+
+.github-card-profile {
+  border: 1px solid #ddd;
+}
+
+.github-card-header {
+  padding: .5rem .5rem .5rem 4.5rem;
+  position: relative;
+  min-height: 4.5rem;
+}
+
+.github-card-image {
+  border-radius: 0.25rem;
+  overflow: hidden;
+  position: absolute;
+  top: .5rem;
+  left: .5rem;
+  width: 3.5rem;
+}
+
+.github-card-image > img {
+  max-width: 100%;
+  height: auto;
+}
+
+.github-card-name > a {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  margin-bottom: .25rem;
+}
+
+.github-card-status {
+  border-top: 1px solid #ddd;
+}
+
+.github-card-item {
+  border-left: 1px solid #ddd;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  padding: .5rem .25rem;
+  margin-right: -.25rem;
+  width: 33.33333%;
+}
+
+.github-card-item:first-child {
+  border-left: 0;
+}
+
+.github-card-item > a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.github-card-count {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.github-card-repos {
+	border: 1px solid #ddd;
+}
+
+.github-card-repos-title {
+	margin: .5rem;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+.github-card-repo {
+	border-top: 1px solid #ddd;
+}
+
+.github-card-repo:first-child {
+	border-top: 0;
+}
+
+.github-card-repo-name a {
+	color: #337ab7;
+	display: block;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 .25rem;
+}
+
+.github-card-repo-name a:hover,
+.github-card-repo-name a:focus {
+	color: #337ab7;
+	text-decoration: underline;
+}
+</style>

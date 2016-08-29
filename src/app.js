@@ -1,4 +1,4 @@
-import GithubCard from './components/GithubCard.vue'
+import GithubCard from './components/githubcard.vue'
 
 const app = new Vue({
   el: 'body',
