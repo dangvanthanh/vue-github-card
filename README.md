@@ -10,7 +10,7 @@
 
 ```html
 <template>
-	<github-card user="dangvanthanh"></github-card>
+	<github-card username="dangvanthanh"></github-card>
 </template>
 
 <script>

@@ -1,16 +1,16 @@
 var GithubCardService = {
-  fetchUsername: function fetchUsername(username) {
+  fetchUsername: function fetchUsername (username) {
     return new Promise(function (resolve, reject) {
-      fetch(("https://api.github.com/users/" + username))
+      fetch('https://api.github.com/users/' + username)
         .then(function (res) { return res.json(); })
         .then(function (data) {
           resolve(data)
         })
     })
   },
-  fetchReposByUsername: function fetchReposByUsername(username) {
+  fetchReposByUsername: function fetchReposByUsername (username) {
     return new Promise(function (resolve, reject) {
-      fetch(("https://api.github.com/users/" + username + "/repos"))
+      fetch('https://api.github.com/users/' + username + '/repos')
         .then(function (res) { return res.json(); })
         .then(function (data) {
           resolve(data)
