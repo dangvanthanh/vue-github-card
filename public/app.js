@@ -81,6 +81,7 @@ var GithubCard = { template: "<div class=github-card><div class=github-card-sear
     },
     getReposByUsername: function getReposByUsername(data) {
       var self = this;
+
       var responseData = data.filter(function (d) {
         return d.stargazers_count > 0;
       }).sort(function (a, b) {
@@ -96,6 +97,8 @@ var GithubCard = { template: "<div class=github-card><div class=github-card-sear
 
       if (responseData.length) {
         self.repos = responseData;
+      } else {
+        self.repos = [];
       }
     }
   }

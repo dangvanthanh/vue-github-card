@@ -121,6 +121,7 @@ export default {
     },
     getReposByUsername (data) {
       let self = this
+
    		let responseData = data.filter((d) => {
    			return d.stargazers_count > 0
    		}).sort((a, b) => {
@@ -136,7 +137,9 @@ export default {
 
    		if (responseData.length) {
    			self.repos = responseData
-   		}
+   		} else {
+        self.repos = []
+      }
     }
   }
 }
