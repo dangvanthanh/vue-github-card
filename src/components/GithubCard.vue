@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import GithubCardService from './githubcard-service'
+import GithubCardService from '../services/githubcard'
 
 export default {
   data () {
