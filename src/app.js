@@ -1,11 +1,7 @@
 import Vue from 'vue'
-import GithubCard from './components/githubcard.vue'
-
-window.Vue = Vue
+import App from './components/app.vue'
 
 const app = new Vue({
-  el: 'body',
-  components: {
-    GithubCard
-  }
+  el: '#app',
+	render: h => h(App)
 })

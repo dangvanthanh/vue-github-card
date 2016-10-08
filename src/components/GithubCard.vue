@@ -2,13 +2,11 @@
   <div class="github-card">
     <div class="github-card-search">
       <div class="github-card-form">
-        <input type="search" placeholder="Type Github Username + Enter" class="github-card-textfield" v-model="username" @keyup.enter="onSubmit">
+        <input type="search" placeholder="Type Github Username + Enter" class="github-card-textfield" v-on:input="onInput" @keyup.enter="onSubmit">
       </div>
     </div>
     <div class="github-card-profile" v-if="msg.length > 0">
-      <div class="github-card-error">
-        {{{msg}}}
-      </div>
+      <div class="github-card-error" v-html="msg"></div>
     </div>
     <div class="github-card-profile" v-if="isFoundProfile">
       <div class="github-card-header">
@@ -64,15 +62,11 @@ export default {
       profile: {},
       repos: [],
       isFoundProfile: false,
-      msg: ''
+      msg: '',
+      username: ''
     }
   },
-  props: {
-    username: {
-      type: String
-    }
-  },
-  ready () {
+  mounted () {
     if (this.username) {
       this.onSubmit()
     }
@@ -140,6 +134,9 @@ export default {
    		} else {
         self.repos = []
       }
+    },
+    onInput (event) {
+      this.$emit('input', this.username = event.target.value)
     }
   }
 }
