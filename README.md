@@ -10,13 +10,20 @@
 
 ```html
 <template>
-	<github-card username="dangvanthanh"></github-card>
+	<div>
+		<github-card v-model="username"></github-card>
+	</div>
 </template>
 
 <script>
 import GithubCard from 'GithubCard'
 
 export default {
+	data () {
+		return {
+			username: ''
+		}
+	},
 	components {
 		GithubCard
 	}
@@ -31,17 +38,17 @@ export default {
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Vue Github Card With Vue.js</title>
+  <title>Github card using Vue.js</title>
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  <div class="container">
-    <github-card username="dangvanthanh"></github-card>
-  </div>
+	<div id="app">
+	    <github-card v-model="username"></github-card>
+	</div>
   <script src="https://vuejs.org/js/vue.min.js"></script>
   <script>
 		var app = new Vue({
-		  el: 'body',
+		  el: '#app',
 		  components: {
 		    GithubCard
 		  }
@@ -50,12 +57,6 @@ export default {
 </body>
 </html>
 ```
-
-## Props
-
-| Props    | Data Type | Required | Description     |
-|----------|-----------|----------|-----------------|
-| username | String    | false    | Username github |
 
 ## License
 
