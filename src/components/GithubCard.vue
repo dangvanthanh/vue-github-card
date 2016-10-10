@@ -2,7 +2,12 @@
   <div class="github-card">
     <div class="github-card-search">
       <div class="github-card-form">
-        <input type="search" placeholder="Type Github Username + Enter" class="github-card-textfield" v-on:input="onInput" @keyup.enter="onSubmit">
+        <input type="search"
+          placeholder="Type Github Username + Enter"
+          class="github-card-textfield"
+          type="text"
+          v-on:input="onInput"
+          @keyup.enter="onSubmit">
       </div>
     </div>
     <div class="github-card-profile" v-if="msg.length > 0">
@@ -136,7 +141,8 @@ export default {
       }
     },
     onInput (event) {
-      this.$emit('input', this.username = event.target.value)
+      this.username = event.target.value
+      this.$emit('input', event.target.value)
     }
   }
 }

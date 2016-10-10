@@ -10,7 +10,7 @@ import GithubCard from './githubcard.vue'
 export default {
   data () {
     return {
-			username: ''
+			username: 'dangvanthanh'
 		}
   },
   components: {
