@@ -4,9 +4,17 @@
 
 ![](screenshot.png)
 
-## Usage
+## Install
 
-### .vue files
+```
+# yarn (recommend)
+$ yarn install vue-github-card
+
+# npm
+$ npm install vue-github-card --save
+```
+
+## Usage
 
 ```html
 <template>
@@ -16,7 +24,7 @@
 </template>
 
 <script>
-import GithubCard from 'GithubCard'
+import GithubCard from 'vue-github-card'
 
 export default {
 	data () {
@@ -31,32 +39,9 @@ export default {
 </script>
 ```
 
-### .html files
+## Build Setup
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Github card using Vue.js</title>
-  <link rel="stylesheet" href="app.css">
-</head>
-<body>
-	<div id="app">
-	    <github-card v-model="username"></github-card>
-	</div>
-  <script src="https://vuejs.org/js/vue.min.js"></script>
-  <script>
-		var app = new Vue({
-		  el: '#app',
-		  components: {
-		    GithubCard
-		  }
-		});
-	</script>
-</body>
-</html>
-```
+You can use [vue-cli](https://github.com/vuejs/vue-cli) with [vue-rollup-boilerplate](https://github.com/dangvanthanh/vue-rollup-boilerplate).
 
 ## License
 
