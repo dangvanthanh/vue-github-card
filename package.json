@@ -1,6 +1,6 @@
 {
   "name": "vue-github-card",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Github card using Vue",
   "main": "src/index.js",
   "peerDependencies": {
