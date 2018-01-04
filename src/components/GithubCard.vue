@@ -2,11 +2,12 @@
   <div class="github-card">
     <div class="github-card-search">
       <div class="github-card-form">
-        <input type="search"
+        <input
           placeholder="Type github username to search..."
           class="github-card-textfield"
           type="text"
-          v-on:input="onInput"
+          :value="username"
+          @input="onInput"
           @keyup.enter="onSubmit">
       </div>
     </div>
@@ -49,7 +50,7 @@
     <template v-if="isFoundProfile == true && repos.length">
       <div class="github-card-repos">
   			<h3 class="github-card-repos-title">Top repository</h3>
-        <div class="github-card-repo" v-for="repo in repos">
+        <div class="github-card-repo" v-for="(repo, i) in repos" :key="i">
           <div class="github-card-item github-card-repo-name">
             <a v-bind:href="repo.repoUrl">{{repo.name}}</a>
           </div>
@@ -65,36 +66,41 @@
 </template>
 
 <script>
-import GithubCardService from './services/github-card'
+import GithubCardService from '../services/GithubCardService'
 
 export default {
+  props: {
+    username: {
+      type: String
+    }
+  },
   data () {
     return {
+      _username: this.username,
       profile: {},
       repos: [],
       isFoundProfile: false,
-      msg: '',
-      username: ''
+      msg: ''
     }
   },
   mounted () {
-    if (this.username) {
+    if (this._username) {
       this.onSubmit()
     }
   },
   methods: {
     onSubmit () {
-      if (this.username.trim() === '') {
+      if (!!this._username && this._username.trim() === '') {
         return
       }
 
-			this.username = this.username.trim()
+      this._username = this._username.trim()
 
-      GithubCardService.fetchUsername(this.username).then(this.getProfileByUsername)
-      GithubCardService.fetchReposByUsername(this.username).then(this.getReposByUsername)
+      GithubCardService.fetchUsername(this._username).then(this.getProfileByUsername)
+      GithubCardService.fetchReposByUsername(this._username).then(this.getReposByUsername)
     },
     getProfileByUsername (data) {
-      this.username = ''
+      this._username = ''
 
 			if (data.message === 'Not Found') {
 				this.profile = {}
@@ -106,7 +112,7 @@ export default {
 				`
 			} else {
 				this.msg = ''
-				this.isFoundProfile = true
+        this.isFoundProfile = true
 				this.profile = {
 					name: data.name,
 					avatar: data.avatar_url,
@@ -118,7 +124,7 @@ export default {
 					followersUrl: data.html_url + '/followers',
 					following: data.following,
 					followingUrl: data.html_url + '/following'
-				}
+        }
 			}
     },
     getReposByUsername (data) {
@@ -142,7 +148,7 @@ export default {
 			}
     },
     onInput (event) {
-      this.username = event.target.value
+      this._username = event.target.value
       this.$emit('input', event.target.value)
     }
   }
