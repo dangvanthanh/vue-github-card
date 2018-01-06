@@ -11,15 +11,12 @@
     "type": "git",
     "url": "vue-github-card"
   },
-  "keywords": [
-    "vue",
-    "github-card",
-    "vue-github-card"
-  ],
+  "keywords": ["vue", "github-card", "vue-github-card"],
   "scripts": {
     "build": "run-s build:**",
     "build:js": "cross-env NODE_ENV=production rollup -c",
-    "build:autoprefixer": "postcss --use autoprefixer -o dist/assets/css/app.css dist/assets/css/app.css",
+    "build:autoprefixer":
+      "postcss --use autoprefixer -o dist/assets/css/app.css dist/assets/css/app.css",
     "build:cssnano": "cssnano dist/assets/css/app.css dist/assets/css/app.css",
     "dev": "cross-env NODE_ENV=development rollup -cw"
   },
