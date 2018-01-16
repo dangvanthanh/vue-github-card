@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import GithubCardService from '../services/GithubCardService'
+import GithubCardService from './GithubCardService'
 
 export default {
   props: {
